@@ -50,7 +50,10 @@ class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
         $this->nama = 'Fulan';
 
-        // menyimpan di bascontroller
+        // cara konek db tanpa model
         $this->komikModel = new \App\Models\KomikModel();
+
+        // menyimpan session agar tetap bisa bekerja di halaman lain
+        session();
     }
 }
