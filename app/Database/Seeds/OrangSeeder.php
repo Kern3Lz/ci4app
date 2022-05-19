@@ -53,7 +53,7 @@ class OrangSeeder extends Seeder
             $this->db->table('orang')->insert($data);
         }
 
-        // commit
+        // commit2
         // Simple Queries
 
         // $this->db->query('INSERT INTO tablename (field db, field db) VALUES (placeholder1 di $data, placeholder2 di $data)', $data);
