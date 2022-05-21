@@ -28,11 +28,11 @@ class Orang extends BaseController
         // $keyword = $this->request->getVar('keyword') ? $this->request->getVar('keyword') : '';
 
         // cara WPU
-        $keyword = $this->request->getVar('keyword');
-        if ($keyword) {
-            $orang = $this->orangModel->search($keyword);
+        $search = $this->request->getVar('search');
+        if ($search) {
+            $orang = $this->orangModel->search($search);
         } else {
-            $orang = $this->orangModel;
+            $orang = $this->orangModel->search('');
         }
 
         $data = [
@@ -45,6 +45,7 @@ class Orang extends BaseController
             // 'currentPage' => $currentPage,
             'currentPage' => $currentPage,
             'baris' => $baris,
+            'search' => $search
         ];
 
         return view('orang/index', $data);
@@ -62,5 +63,63 @@ class Orang extends BaseController
         //dd($orang);
 
 
+    }
+
+    public function edit($id)
+    {
+        $orang = $this->request->getVar('id');
+        $data = [
+            'title' => 'Ubah Orang | CI 4 Application',
+            'validation' => \Config\Services::validation(),
+            'orang' => $this->orangModel->getOrang($id)
+        ];
+        return view('orang/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $orang = $this->request->getVar('id');
+        $data = [
+            'title' => 'Ubah Orang | CI 4 Application',
+            'validation' => \Config\Services::validation(),
+            'orang' => $this->orangModel->getOrang($id)
+        ];
+
+        $this->orangModel->save([
+            //'nama_column' => $this->request->getVar('name di form')'),
+            'id' => $id,
+            'nama' => $this->request->getVar('nama'),
+            'alamat' => $this->request->getVar('alamat'),
+        ]);
+
+        // set flash data
+        session()->setFlashdata('success', 'Data berhasil diubah');
+        return redirect()->to('/orang');
+    }
+
+    public function delete($id)
+    {
+        // $orang = $this->orangModel->find($id);
+        // // $data = [
+        // //     'title' => 'Hapus Orang | CI 4 Application',
+        // //     'validation' => \Config\Services::validation(),
+        // //     'orang' => $this->orangModel->getOrang($id)
+        // // ];
+        // // $this->orangModel->delete($id);
+        // // // set flash data
+        // // session()->setFlashdata('success', 'Data berhasil dihapus');
+        // // return redirect()->to('/orang');
+
+        // // make delete method
+        // $this->orangModel->delete($id);
+        // // set flash data
+        // session()->setFlashdata('success', 'Data berhasil dihapus');
+        // return redirect()->to('/orang');
+
+        // make delete data
+        $this->orangModel->delete($id);
+        // set flash data
+        session()->setFlashdata('success', 'Data berhasil dihapus');
+        return redirect()->to('/orang');
     }
 }

@@ -24,4 +24,12 @@ class OrangModel extends Model
         return $this->table('orang')->like('nama', $keyword);
         // d($this->table('orang')->like('nama', $keyword));
     }
+
+    public function getOrang($id = false)
+    {
+        if ($id == false) {
+            return $this->findAll();
+        }
+        return $this->where(['id' => $id])->first();
+    }
 }
